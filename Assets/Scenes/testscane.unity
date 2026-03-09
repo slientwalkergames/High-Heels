@@ -330,6 +330,7 @@ GameObject:
   - component: {fileID: 327283700}
   - component: {fileID: 327283699}
   - component: {fileID: 327283702}
+  - component: {fileID: 327283703}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -455,6 +456,21 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &327283703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 327283698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f874fd42a060eb3f5bef7d9d14d4b631, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1246122215}
+  offset: {x: 0, y: 0, z: 0}
+  smoothSpeed: 0.125
 --- !u!1001 &388127715
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1041,6 +1057,7 @@ GameObject:
   - component: {fileID: 1246122215}
   - component: {fileID: 1246122217}
   - component: {fileID: 1246122216}
+  - component: {fileID: 1246122218}
   m_Layer: 0
   m_Name: woman
   m_TagString: Untagged
@@ -1122,6 +1139,73 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1246122214}
   m_Mesh: {fileID: 8768909277048734747, guid: e7509637dab2b0d82a26c922f2cdf9b3, type: 3}
+--- !u!114 &1246122218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1246122214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccc6b44922b1e2a2bbad4a36155be9cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forwardSpeed: 5
+  sideSpeed: 5
+  limitX: 2.5
+--- !u!1 &1302087602
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1302087604}
+  - component: {fileID: 1302087603}
+  m_Layer: 0
+  m_Name: buildingrandom
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1302087603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1302087602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13ff04b0faa8fbbc3bea6cd9b7c41989, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildingPrefabs:
+  - {fileID: 2100584868}
+  - {fileID: 1655950053}
+  numberOfBuildings: 0
+  spawnDistance: 0
+  platformWidth: 0
+  xRotation: -20
+  generateNow: 1
+--- !u!4 &1302087604
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1302087602}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -15.848384, y: -4.2741375, z: 42.021545}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1451114210
 GameObject:
   m_ObjectHideFlags: 0
@@ -1957,3 +2041,4 @@ SceneRoots:
   - {fileID: 388127715}
   - {fileID: 1458890121}
   - {fileID: 1664601401}
+  - {fileID: 1302087604}
