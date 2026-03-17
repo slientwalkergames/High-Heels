@@ -6,14 +6,22 @@ public class KarakterKontrol : MonoBehaviour
     [Header("Hareket Ayarları")]
     public float ileriHiz = 5f;
     public float yatayHiz = 10f;
-    public float yolSiniri = 4.5f;
+    // yolSiniri değişkenini artık kod otomatik hesaplayacak
+    private float solSinir;
+    private float sagSinir;
+
+    // Fare kontrolü için gerekli değişkenler
+    private float ilkFarePozisyonuX;
+    private float ilkKarakterPozisyonuX;
+
+    [Header("Sınır Objesi")]
+    public GameObject yerObjesi; // Buraya Scale X'i 55 olan "Yer" objesini sürükle
 
     [Header("İstifleme Ayarları")]
     public List<GameObject> istiflenmisKupler = new List<GameObject>();
     private Color karakterRengi;
 
     [Header("Engel Ayarları")]
-    // Buraya Unity içinden 7 adet engel küpünü (cube1, cube2 vb.) sürükleyip bırakabilirsin
     public List<GameObject> Engeller = new List<GameObject>();
 
     void Start()
@@ -22,6 +30,16 @@ public class KarakterKontrol : MonoBehaviour
         
         // Karakterin kendisini listenin ilk elemanı yapalım
         istiflenmisKupler.Add(this.gameObject);
+
+        // --- EKLEME: YER SINIRLARINI HESAPLA ---
+        if (yerObjesi != null)
+        {
+            Renderer yerRenderer = yerObjesi.GetComponent<Renderer>();
+            // Objenin dünyadaki en sol ve en sağ X noktalarını bulur
+            // 0.5f payı karakterin kenardan taşmaması içindir
+            solSinir = yerRenderer.bounds.min.x + 0.5f;
+            sagSinir = yerRenderer.bounds.max.x - 0.5f;
+        }
     }
 
     void Update()
@@ -34,12 +52,50 @@ public class KarakterKontrol : MonoBehaviour
         // 1. Sürekli İleri Hareket
         transform.Translate(Vector3.forward * ileriHiz * Time.deltaTime);
 
-        // 2. Sağa-Sola Hareket
-        float yatayGirdi = Input.GetAxis("Horizontal");
-        Vector3 yeniPozisyon = transform.position + new Vector3(yatayGirdi * yatayHiz * Time.deltaTime, 0, 0);
+        // --- YENİ KONTROL MANTIĞI (TUŞLAR + FARE) ---
+        
+        float yatayGirdi = 0;
 
-        yeniPozisyon.x = Mathf.Clamp(yeniPozisyon.x, -yolSiniri, yolSiniri);
-        transform.position = yeniPozisyon;
+        // A) KLAVYE KONTROLÜ (A-D veya Ok Tuşları)
+        yatayGirdi = Input.GetAxis("Horizontal");
+
+        // B) FARE KONTROLÜ (Sürükleme Mantığı)
+        if (Input.GetMouseButtonDown(0))
+        {
+            // Fareye ilk basıldığında pozisyonları kaydet
+            ilkFarePozisyonuX = Input.mousePosition.x;
+            ilkKarakterPozisyonuX = transform.position.x;
+        }
+        
+        if (Input.GetMouseButton(0))
+        {
+            // Fare basılı tutulurken aradaki farkı hesapla
+            float fareFarki = Input.mousePosition.x - ilkFarePozisyonuX;
+            // Ekran genişliğine göre normalize et ve yatay hızla çarp
+            float hareketMiktari = (fareFarki / Screen.width) * (yatayHiz * 2.5f); 
+            
+            // Yeni pozisyonu hesapla (Klavye girdisi yoksa fareye öncelik verir)
+            if (Mathf.Abs(fareFarki) > 0.1f)
+            {
+                Vector3 farePozisyonu = transform.position;
+                farePozisyonu.x = ilkKarakterPozisyonuX + hareketMiktari;
+                transform.position = farePozisyonu;
+            }
+        }
+
+        // Eğer fare kullanılmıyorsa klavye hareketini uygula
+        if (!Input.GetMouseButton(0))
+        {
+            transform.position += new Vector3(yatayGirdi * yatayHiz * Time.deltaTime, 0, 0);
+        }
+
+        // --- SINIRLARA GÖRE KISITLA ---
+        if (yerObjesi != null)
+        {
+            Vector3 sinirliPozisyon = transform.position;
+            sinirliPozisyon.x = Mathf.Clamp(sinirliPozisyon.x, solSinir, sagSinir);
+            transform.position = sinirliPozisyon;
+        }
     }
 
     private void OnTriggerEnter(Collider diger)
@@ -60,7 +116,6 @@ public class KarakterKontrol : MonoBehaviour
         }
 
         // --- ENGEL MANTIĞI ---
-        // Eğer çarptığımız obje "Engeller" listesinin içindeyse
         if (Engeller.Contains(diger.gameObject))
         {
             EngelIleCarpis(diger.gameObject);
@@ -82,25 +137,17 @@ public class KarakterKontrol : MonoBehaviour
 
     void EngelIleCarpis(GameObject engel)
     {
-        // Engele bir kez çarpmak için engel collider'ını kapatabiliriz
         engel.GetComponent<Collider>().enabled = false;
 
         if (istiflenmisKupler.Count > 1)
         {
-            // En üstteki (en son eklenen) küpü bul
             GameObject sonKup = istiflenmisKupler[istiflenmisKupler.Count - 1];
-            
-            // Listeden çıkar
             istiflenmisKupler.Remove(sonKup);
-            
-            // Sahneden sil (veya arkada bırakabilirsin)
             Destroy(sonKup);
-            
-            Debug.Log("Engele çarptın! Bir küp kaybettin. Kalan: " + (istiflenmisKupler.Count - 1));
+            Debug.Log("Engele çarptın! Bir küp kaybettin.");
         }
         else
         {
-            // Eğer yanında hiç küp yoksa ve sadece kendisi kalmışsa oyun biter
             OyunBitti();
         }
     }
