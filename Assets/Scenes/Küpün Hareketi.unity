@@ -246,7 +246,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ileriHiz: 5
   yatayHiz: 10
-  yolSiniri: 4.5
+  yerObjesi: {fileID: 0}
   istiflenmisKupler: []
   Engeller: []
 --- !u!54 &151607
@@ -311,7 +311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ileriHiz: 5
   yatayHiz: 10
-  yolSiniri: 4.5
+  yerObjesi: {fileID: 0}
   istiflenmisKupler: []
   Engeller: []
 --- !u!1 &197622845
@@ -1393,7 +1393,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ileriHiz: 5
   yatayHiz: 10
-  yolSiniri: 4.5
+  yerObjesi: {fileID: 0}
   istiflenmisKupler: []
   Engeller: []
 --- !u!1 &1470364622

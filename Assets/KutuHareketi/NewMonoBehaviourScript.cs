@@ -6,16 +6,14 @@ public class KarakterKontrol : MonoBehaviour
     [Header("Hareket Ayarları")]
     public float ileriHiz = 5f;
     public float yatayHiz = 10f;
-    // yolSiniri değişkenini artık kod otomatik hesaplayacak
     private float solSinir;
     private float sagSinir;
 
-    // Fare kontrolü için gerekli değişkenler
     private float ilkFarePozisyonuX;
     private float ilkKarakterPozisyonuX;
 
     [Header("Sınır Objesi")]
-    public GameObject yerObjesi; // Buraya Scale X'i 55 olan "Yer" objesini sürükle
+    public GameObject yerObjesi; 
 
     [Header("İstifleme Ayarları")]
     public List<GameObject> istiflenmisKupler = new List<GameObject>();
@@ -27,16 +25,11 @@ public class KarakterKontrol : MonoBehaviour
     void Start()
     {
         karakterRengi = GetComponent<Renderer>().material.color;
-        
-        // Karakterin kendisini listenin ilk elemanı yapalım
         istiflenmisKupler.Add(this.gameObject);
 
-        // --- EKLEME: YER SINIRLARINI HESAPLA ---
         if (yerObjesi != null)
         {
             Renderer yerRenderer = yerObjesi.GetComponent<Renderer>();
-            // Objenin dünyadaki en sol ve en sağ X noktalarını bulur
-            // 0.5f payı karakterin kenardan taşmaması içindir
             solSinir = yerRenderer.bounds.min.x + 0.5f;
             sagSinir = yerRenderer.bounds.max.x - 0.5f;
         }
@@ -49,32 +42,21 @@ public class KarakterKontrol : MonoBehaviour
 
     void HareketEt()
     {
-        // 1. Sürekli İleri Hareket
         transform.Translate(Vector3.forward * ileriHiz * Time.deltaTime);
-
-        // --- YENİ KONTROL MANTIĞI (TUŞLAR + FARE) ---
         
-        float yatayGirdi = 0;
+        float yatayGirdi = Input.GetAxis("Horizontal");
 
-        // A) KLAVYE KONTROLÜ (A-D veya Ok Tuşları)
-        yatayGirdi = Input.GetAxis("Horizontal");
-
-        // B) FARE KONTROLÜ (Sürükleme Mantığı)
         if (Input.GetMouseButtonDown(0))
         {
-            // Fareye ilk basıldığında pozisyonları kaydet
             ilkFarePozisyonuX = Input.mousePosition.x;
             ilkKarakterPozisyonuX = transform.position.x;
         }
         
         if (Input.GetMouseButton(0))
         {
-            // Fare basılı tutulurken aradaki farkı hesapla
             float fareFarki = Input.mousePosition.x - ilkFarePozisyonuX;
-            // Ekran genişliğine göre normalize et ve yatay hızla çarp
             float hareketMiktari = (fareFarki / Screen.width) * (yatayHiz * 2.5f); 
             
-            // Yeni pozisyonu hesapla (Klavye girdisi yoksa fareye öncelik verir)
             if (Mathf.Abs(fareFarki) > 0.1f)
             {
                 Vector3 farePozisyonu = transform.position;
@@ -83,13 +65,11 @@ public class KarakterKontrol : MonoBehaviour
             }
         }
 
-        // Eğer fare kullanılmıyorsa klavye hareketini uygula
         if (!Input.GetMouseButton(0))
         {
             transform.position += new Vector3(yatayGirdi * yatayHiz * Time.deltaTime, 0, 0);
         }
 
-        // --- SINIRLARA GÖRE KISITLA ---
         if (yerObjesi != null)
         {
             Vector3 sinirliPozisyon = transform.position;
@@ -100,7 +80,6 @@ public class KarakterKontrol : MonoBehaviour
 
     private void OnTriggerEnter(Collider diger)
     {
-        // --- KÜP TOPLAMA MANTIĞI ---
         if (diger.CompareTag("Kup"))
         {
             Color digerRenk = diger.GetComponent<Renderer>().material.color;
@@ -111,14 +90,36 @@ public class KarakterKontrol : MonoBehaviour
             }
             else
             {
-                OyunBitti();
+                // DEĞİŞİKLİK: Farklı renge çarpınca direkt yanmak yerine küp eksiltiyoruz
+                FarkliRenkIleCarpis(diger.gameObject);
             }
         }
 
-        // --- ENGEL MANTIĞI ---
         if (Engeller.Contains(diger.gameObject))
         {
             EngelIleCarpis(diger.gameObject);
+        }
+    }
+
+    // --- YENİ EKLENEN FONKSİYON: FARKLI RENK MANTIĞI ---
+    void FarkliRenkIleCarpis(GameObject carpilannObje)
+    {
+        // Çarpılan yanlış renkteki objeyi yok et (içinden geçip gitmemek için)
+        carpilannObje.GetComponent<Collider>().enabled = false;
+        Destroy(carpilannObje);
+
+        // Eğer istifte sadece karakterin kendisi yoksa (yani fazladan küpü varsa)
+        if (istiflenmisKupler.Count > 1)
+        {
+            GameObject sonKup = istiflenmisKupler[istiflenmisKupler.Count - 1];
+            istiflenmisKupler.Remove(sonKup);
+            Destroy(sonKup);
+            Debug.Log("Yanlış renk! Bir küp kaybettin. Kalan: " + (istiflenmisKupler.Count - 1));
+        }
+        else
+        {
+            // Hiç küp kalmadıysa ve ana karakter yanlış renge çarptıysa
+            OyunBitti();
         }
     }
 
@@ -132,7 +133,7 @@ public class KarakterKontrol : MonoBehaviour
         yeniKup.transform.localRotation = Quaternion.identity;
 
         istiflenmisKupler.Add(yeniKup);
-        Debug.Log("Küp eklendi! Toplam: " + istiflenmisKupler.Count);
+        Debug.Log("Küp eklendi! Toplam: " + (istiflenmisKupler.Count - 1));
     }
 
     void EngelIleCarpis(GameObject engel)
