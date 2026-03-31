@@ -131,7 +131,6 @@ GameObject:
   - component: {fileID: 151604}
   - component: {fileID: 151603}
   - component: {fileID: 151602}
-  - component: {fileID: 151605}
   - component: {fileID: 151607}
   - component: {fileID: 151608}
   - component: {fileID: 151609}
@@ -232,23 +231,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 151600}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &151605
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 151600}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa500a780cb3a02a58f5812ee741517b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ileriHiz: 5
-  yatayHiz: 10
-  yerObjesi: {fileID: 0}
-  istiflenmisKupler: []
-  Engeller: []
 --- !u!54 &151607
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -306,12 +288,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 151600}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa500a780cb3a02a58f5812ee741517b, type: 3}
+  m_Script: {fileID: 11500000, guid: a4831ba2ee6a2f216aa75e15740076e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ileriHiz: 5
   yatayHiz: 10
-  yerObjesi: {fileID: 0}
+  yerObjesi: {fileID: 904565870}
   istiflenmisKupler: []
   Engeller: []
 --- !u!1 &197622845
@@ -1391,11 +1373,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa500a780cb3a02a58f5812ee741517b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ileriHiz: 5
-  yatayHiz: 10
-  yerObjesi: {fileID: 0}
-  istiflenmisKupler: []
-  Engeller: []
 --- !u!1 &1470364622
 GameObject:
   m_ObjectHideFlags: 0

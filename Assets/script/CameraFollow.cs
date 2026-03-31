@@ -22,5 +22,6 @@ public class CameraFollow : MonoBehaviour
         
         // Kameranın yeni pozisyonunu ayarla
         transform.position = smoothedPosition;
+        
     }
 }
