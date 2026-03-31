@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Kup
   - Kup2
+  - Heel
+  - Diamond
+  - Rail
+  - Obstacle
   layers:
   - Default
   - TransparentFX
