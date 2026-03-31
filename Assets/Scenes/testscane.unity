@@ -130,7 +130,6 @@ GameObject:
   - component: {fileID: 2535238}
   - component: {fileID: 2535240}
   - component: {fileID: 2535239}
-  - component: {fileID: 2535241}
   m_Layer: 3
   m_Name: shoe left
   m_TagString: Untagged
@@ -209,27 +208,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2535237}
   m_Mesh: {fileID: 6144704215258725751, guid: e7509637dab2b0d82a26c922f2cdf9b3, type: 3}
---- !u!65 &2535241
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2535237}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.00626887, y: 0.012491853, z: 0.010801335}
-  m_Center: {x: -0.00008327619, y: -0.0010083306, z: 0.0006972693}
 --- !u!1 &51740231
 GameObject:
   m_ObjectHideFlags: 0
@@ -3050,7 +3028,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: f6d3690abdd95923887b1109656d29c1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f6d3690abdd95923887b1109656d29c1, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4322,7 +4300,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: f6d3690abdd95923887b1109656d29c1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.91
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f6d3690abdd95923887b1109656d29c1, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4522,7 +4500,7 @@ Transform:
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 1, z: 24}
   m_LocalScale: {x: 50, y: 50, z: 50}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2535238}
   - {fileID: 1581374569}
@@ -4601,8 +4579,8 @@ MonoBehaviour:
   sideSpeed: 15
   xBound: 4.5
   womanModel: {fileID: 1246122215}
-  shoeLeft: {fileID: 2535238}
-  shoeRight: {fileID: 1581374569}
+  pivotLeft: {fileID: 2535238}
+  pivotRight: {fileID: 1581374569}
   growthAmount: 0.5
 --- !u!54 &1246122219
 Rigidbody:
@@ -4646,7 +4624,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -5137,7 +5115,6 @@ GameObject:
   - component: {fileID: 1581374569}
   - component: {fileID: 1581374571}
   - component: {fileID: 1581374570}
-  - component: {fileID: 1581374572}
   m_Layer: 3
   m_Name: shoe right
   m_TagString: Untagged
@@ -5216,27 +5193,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1581374568}
   m_Mesh: {fileID: -3235246130515540435, guid: e7509637dab2b0d82a26c922f2cdf9b3, type: 3}
---- !u!65 &1581374572
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1581374568}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.00626887, y: 0.012491853, z: 0.010801335}
-  m_Center: {x: 0.00008327712, y: -0.0010083306, z: 0.0006972693}
 --- !u!1 &1655950053
 GameObject:
   m_ObjectHideFlags: 0
